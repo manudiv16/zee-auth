@@ -9,7 +9,7 @@ import java.lang.System.Logger
 object CookieAuthApp:
 
   // Login is successful only if the password is the reverse of the username
-  def login: Http[JwtRepo, Throwable, Request, Response] =
+  lazy val live: Http[JwtRepo, Throwable, Request, Response] =
     Http.collectZIO[Request] {
       case Method.GET -> !! / "login" / username / password =>
         for {
@@ -27,6 +27,3 @@ object CookieAuthApp:
               .text("Invalid username or password.")
               .setStatus(Status.Unauthorized)
     }
-
-  def apply() =
-    login

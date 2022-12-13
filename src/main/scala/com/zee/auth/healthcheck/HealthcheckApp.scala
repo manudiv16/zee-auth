@@ -10,7 +10,7 @@ import zio.http.model.Method
   *   - Uses a String for the env, for the webapp root
   */
 object HealthcheckApp:
-  def apply(): Http[Any, Nothing, Request, Response] =
+  lazy val live: Http[Any, Nothing, Request, Response] =
     Http.collect[Request] { case Method.GET -> !! / "healthz" =>
       Response.text(s"UP!")
     }

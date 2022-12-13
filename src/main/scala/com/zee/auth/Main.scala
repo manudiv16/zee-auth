@@ -15,7 +15,7 @@ object Main extends ZIOAppDefault:
     _ <- ZIO.logInfo("Starting up").provide(logger)
     serverFibre <- Server
       .serve(
-        CookieAuthApp() @@ middlewares ++ HealthcheckApp()
+        CookieAuthApp.live @@ middlewares ++ HealthcheckApp.live
       )
       .provide(
         Server.live,
