@@ -20,7 +20,7 @@ val errorMiddleware = new HttpMiddleware[Any, Throwable] {
     }
 }
 
-val middlewares = errorMiddleware ++ requestMiddleWare
+val middlewares = errorMiddleware
 
 val requestMiddleWare = Middleware
   .identity[Request, Response]

@@ -5,7 +5,7 @@ import healthcheck.HealthcheckApp
 
 import zio.{ZIOAppDefault, ZIO, Console}
 import zio.http.Server
-import middleware.middlewares
+import middleware.{errorMiddleware, requestMiddleWare}
 import logger.logger
 import serverConfig.configLayer
 
@@ -15,7 +15,10 @@ object Main extends ZIOAppDefault:
     _ <- ZIO.logInfo("Starting up").provide(logger)
     serverFibre <- Server
       .serve(
-        CookieAuthApp.live @@ middlewares ++ HealthcheckApp.live
+        CookieAuthApp.live ++
+          HealthcheckApp.live @@
+          errorMiddleware @@
+          requestMiddleWare
       )
       .provide(
         Server.live,
