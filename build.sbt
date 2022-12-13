@@ -13,7 +13,11 @@ lazy val root = project
     ),
     libraryDependencies ++= Seq(
       "dev.zio" %% "zio" % zioVersion,
+      "dev.zio" %% "zio-json" % "0.3.0",
+      "dev.zio" %% "zio-http" % "0.0.3",
+      "dev.zio" %% "zio-logging" % "2.1.3",
       "dev.zio" %% "zio-test" % zioVersion % Test,
+      "com.github.jwt-scala" %% "jwt-core" % "9.1.1",
       "dev.zio" %% "zio-test-sbt" % zioVersion % Test,
       "dev.zio" %% "zio-test-junit" % zioVersion % Test,
       "dev.zio" %% "zio-test-magnolia" % zioVersion % Test
