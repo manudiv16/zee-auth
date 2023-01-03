@@ -8,6 +8,9 @@ import zio.http.Server
 import middleware.{errorMiddleware, requestMiddleWare}
 import logger.logger
 import serverConfig.configLayer
+import com.zee.auth.videos.VideoApp
+import com.zee.auth.videos.VideoRepo
+import com.zee.auth.videos.PersistentVideoRepo
 
 object Main extends ZIOAppDefault:
 
@@ -16,6 +19,7 @@ object Main extends ZIOAppDefault:
     serverFibre <- Server
       .serve(
         CookieAuthApp.live ++
+          VideoApp() ++
           HealthcheckApp.live @@
           errorMiddleware @@
           requestMiddleWare
@@ -23,7 +27,8 @@ object Main extends ZIOAppDefault:
       .provide(
         Server.live,
         configLayer,
-        JwtImpl.live
+        JwtImpl.live,
+        PersistentVideoRepo.layer
       )
       .provide(logger)
       .fork

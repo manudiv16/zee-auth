@@ -4,7 +4,6 @@ import zio.http._
 import zio.http.model.{Cookie, Method, Status}
 import java.time.Clock
 import com.zee.auth.auth._
-import java.lang.System.Logger
 
 object CookieAuthApp:
 
