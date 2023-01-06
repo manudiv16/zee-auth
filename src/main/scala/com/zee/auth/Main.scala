@@ -2,15 +2,14 @@ package com.zee.auth
 
 import auth.{JwtImpl, CookieAuthApp}
 import healthcheck.HealthcheckApp
-
+import zio.metrics
 import zio.{ZIOAppDefault, ZIO, Console}
 import zio.http.Server
 import middleware.{errorMiddleware, requestMiddleWare}
 import logger.logger
 import serverConfig.configLayer
-import com.zee.auth.videos.VideoApp
-import com.zee.auth.videos.VideoRepo
-import com.zee.auth.videos.PersistentVideoRepo
+import com.zee.auth.users.AccountApp
+import com.zee.auth.users.PersistentVideoRepo
 
 object Main extends ZIOAppDefault:
 
@@ -19,7 +18,7 @@ object Main extends ZIOAppDefault:
     serverFibre <- Server
       .serve(
         CookieAuthApp.live ++
-          VideoApp() ++
+          AccountApp() ++
           HealthcheckApp.live @@
           errorMiddleware @@
           requestMiddleWare

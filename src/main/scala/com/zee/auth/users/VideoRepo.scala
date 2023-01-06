@@ -1,9 +1,9 @@
-package com.zee.auth.videos
+package com.zee.auth.users
 
 import zio._
 import zio.stream.ZStream
 
-trait VideoRepo {
+trait AccountRepo {
   def register(
       username: String,
       password: String,
@@ -11,11 +11,11 @@ trait VideoRepo {
   ): Task[String]
 }
 
-object VideoRepo {
+object AccountRepo {
   def register(
       username: String,
       password: String,
       email: String
-  ): ZIO[VideoRepo, Throwable, String] =
-    ZIO.serviceWithZIO[VideoRepo](_.register(username, password, email))
+  ): ZIO[AccountRepo, Throwable, String] =
+    ZIO.serviceWithZIO[AccountRepo](_.register(username, password, email))
 }

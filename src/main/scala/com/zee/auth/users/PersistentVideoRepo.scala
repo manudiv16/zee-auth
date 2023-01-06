@@ -1,4 +1,4 @@
-package com.zee.auth.videos
+package com.zee.auth.users
 
 import io.getquill.jdbczio.Quill
 import io.getquill.{Escape, H2ZioJdbcContext}
@@ -21,7 +21,7 @@ case class VideoTable(
     email: String
 )
 
-case class PersistentVideoRepo(ds: DataSource) extends VideoRepo {
+case class PersistentAccountRepo(ds: DataSource) extends AccountRepo {
   val ctx = new PostgresZioJdbcContext(Escape)
 
   import ctx._
@@ -46,7 +46,7 @@ case class PersistentVideoRepo(ds: DataSource) extends VideoRepo {
 }
 
 object PersistentVideoRepo {
-  def layer: ZLayer[Any, Throwable, PersistentVideoRepo] =
-    Quill.DataSource.fromPrefix("VideoApp") >>>
-      ZLayer.fromFunction(PersistentVideoRepo(_))
+  def layer: ZLayer[Any, Throwable, PersistentAccountRepo] =
+    Quill.DataSource.fromPrefix("myDatabaseConfig").orDie >>>
+      ZLayer.fromFunction(PersistentAccountRepo(_))
 }
